@@ -1,0 +1,14 @@
+use_sec basic;
+bit_width 32;
+
+int id(int i) {
+    int  r = 0;
+    if (i > 0) {
+        r = id(i - 1) + 1;
+    }
+    return 0;
+}
+
+h input int h := 0bu{32};
+int l = id(h);
+l output int o := l;
