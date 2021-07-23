@@ -1,4 +1,6 @@
 import os
+import subprocess
+import sys
 
 exec_cmd = "time {cmd} ; "
 approxflow_cmd = "python2 ApproxFlow.py {benchmark} f"
@@ -7,8 +9,7 @@ pipe = "2> perf.txt > res.txt'"
 def run_approxflow(benchmark_path):
 
     cmd = "/bin/bash -c '{ " + exec_cmd.format(cmd=approxflow_cmd.format(benchmark=benchmark_path)) + " } " + pipe
-
-    os.system("cd approxflow && " + cmd)
+    subprocess.call("cd approxflow && " + cmd, shell=True)
 
     with open("/approxflow/perf.txt", 'r') as perf:
         for line in perf.readlines():
@@ -30,7 +31,8 @@ def avg(lst):
 def all_af_benchmarks():
     directory = "/benchmarks/"
     for f in os.listdir(directory):
-        print(f)
+        print("-----------------------------------------")
+        print("Program: " + f)
         times = []
         for i in range(0, 10):
             time, leak = run_approxflow(os.path.join(directory, f))
@@ -43,5 +45,14 @@ def all_af_benchmarks():
         
         print("Average: " + str(avg(times)))
         
+def set_unwind(bound):
+    os.environ['UNWIND'] = str(bound)
 
-all_af_benchmarks()
+def run_config(bound):
+    print("*****************************************")
+    print("Using unwinding bound: " + str(bound))
+    all_af_benchmarks()
+    print("*****************************************")
+
+run_config(8)
+run_config(32)

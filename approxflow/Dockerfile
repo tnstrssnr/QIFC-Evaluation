@@ -10,7 +10,7 @@ RUN apt update
 RUN apt-get update -y
 
 # installing some basic stuff
-RUN apt-get install -y autoconf automake libtool make cmake pip gcc git g++ maven python2 python-pycparser build-essential zlib1g-dev libboost-program-options-dev libm4ri-dev libsqlite3-dev help2man linux-tools-common linux-tools-generic
+RUN apt-get install -y autoconf automake libtool make cmake pip gcc git g++ maven python2 python-pycparser build-essential zlib1g-dev libboost-program-options-dev libm4ri-dev libsqlite3-dev help2man linux-tools-common linux-tools-generic python3
 
 
 # installing dependencies needed for approxflow
@@ -34,5 +34,7 @@ WORKDIR /
 COPY benchmarks /benchmarks
 COPY clean.sh /clean.sh
 RUN chmod +x clean.sh
+
 COPY run_benchmark.py /run_benchmark.py
-RUN python2 run_benchmark.py
+
+CMD python3 run_benchmark.py
