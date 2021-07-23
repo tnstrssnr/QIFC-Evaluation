@@ -27,6 +27,14 @@ RUN apt-get update && \
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 
+WORKDIR /
+RUN git clone https://github.com/parttimenerd/nildumu.git
+
+WORKDIR /nildumu
+RUN ./download_solvers
+RUN mvn compile -DskipTests
+RUN mvn package -DskipTests
+
 WORKDIR / 
 COPY benchmarks/ /benchmarks
 
@@ -34,12 +42,4 @@ WORKDIR /
 COPY run_benchmark.py /run_benchmark.py
 
 WORKDIR /
-RUN git clone https://github.com/parttimenerd/nildumu.git
-
-WORKDIR /nildumu
-RUN ./download_solvers
-RUN mvn compile
-RUN mvn package
-
-WORKDIR /
-RUN python run_benchmark.py
+CMD python3 run_benchmark.py

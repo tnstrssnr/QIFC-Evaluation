@@ -51,6 +51,7 @@ def set_unwind(bound):
 def run_config(bound):
     print("*****************************************")
     print("Using unwinding bound: " + str(bound))
+    set_unwind(bound)
     all_af_benchmarks()
     print("*****************************************")
 

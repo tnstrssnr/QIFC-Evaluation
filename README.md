@@ -17,3 +17,16 @@ The benchmark programs were translated into the programming language required by
 For each tool, we provide a separate Docker image along with a set of benchmark programs and a script to run the benchmarks in different configurations.
 
 To run the benchmarks, build the Docker container from the provided ``Dockerfile`` and then run the container.
+
+## Evaluation Setup
+Each Docker container will run the benchmark programs using different tool configurations. The benchmark script will run each benchmark 10 times and print the execution time and the calculated information leakage for each run. After all 10 runs ofa benchmark program are completed, the average run time is reported.
+
+**ApproxFlow**:
+Each benchmark is run twice:
+- Once with UNWIND set to 8
+- Once with UNWIND set to 32
+
+**Nildumu**:
+Each benchmark is run twice:
+- Once with an inlining bound of 8
+- Once with an inlining bound of 32
