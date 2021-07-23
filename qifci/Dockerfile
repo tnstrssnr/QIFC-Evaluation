@@ -46,7 +46,8 @@ RUN ant
 WORKDIR / 
 COPY benchmarks/ /benchmarks
 
-RUN /joana/ifc/sdg/qifc/joana.ifc.sdg.qifc.qif_interpreter/run.sh /benchmarks/SumQuery.java --static
-
 WORKDIR /
 COPY run_benchmark.py /run_benchmark.py
+
+WORKDIR /
+CMD python3 run_benchmark.py

@@ -1,4 +1,3 @@
-// 0 1 2
 import edu.kit.joana.ifc.sdg.qifc.qif_interpreter.input.Out;
 
 public class SumQuery {
