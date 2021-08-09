@@ -29,13 +29,15 @@ RUN g++ -O3 max-flow-boost.cc -o max-flow-boost
 # copy benchmarks
 WORKDIR /
 COPY benchmarks /benchmarks 
+COPY check.sh /
+RUN chmod +x check.sh
 
 WORKDIR /
-RUN gcc -m32 benchmarks/test.c -I/flowcheck-1.20/include -o benchmarks/test
-RUN head -100 /benchmarks/test.c >input
-RUN gcc -m32 flowcheck-1.20/eg/wc.c -o /benchmarks/wc -I/flowcheck-1.20/include
-RUN /benchmarks/wc input
-RUN chmod o-r input
+CMD ./check.sh benchmarks/masked_copy.c benchmarks/masked_copy 1
+# RUN gcc -m32 benchmarks/test.c -I/flowcheck-1.20/include -o benchmarks/test
+# RUN head -100 /benchmarks/test.c >input
+# RUN gcc -m32 flowcheck-1.20/eg/wc.c -o /benchmarks/wc -I/flowcheck-1.20/include
+# RUN /benchmarks/wc input
+# RUN chmod o-r input
 # RUN flowcheck-1.20/bin/valgrind --tool=exp-flowcheck --private-files-are-secret=yes /benchmarks/wc input
-
 # RUN flowcheck-1.20/bin/valgrind --tool=exp-flowcheck --private-files-are-secret=yes --trace-secret-graph=yes --graph-file=/benchmarks/test.g --max-flow-program=/flowcheck-1.20/max-flow-boost /benchmarks/test 1
