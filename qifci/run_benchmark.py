@@ -26,6 +26,8 @@ def run_qifci(benchmark_path, args):
                 cc = line.strip().split()[2]
             if "Dynamic Leakage:" in line:
                 dynLeak = line.strip().split()[2]
+    
+    remove_output_dirs()
 
     return time, cc, dynLeak
 
@@ -100,13 +102,10 @@ def run_dyn_config(bound):
     all_benchmarks(run_all_dyn(bound))
     print("*****************************************")
 
-
-# run_static_config(8, False, False)
-# run_static_config(8, True, False)
-# run_static_config(8, True, True)
-# run_static_config(32, False, False)
-# run_static_config(32, True, False)
-# run_static_config(32, True, True)
+def remove_output_dirs():
+    out_dirs =  path + "/out_*"
+    cmd = "rm -r " + out_dirs
+    subprocess.call(cmd)
 
 run_dyn_config(8)
 run_dyn_config(32)
